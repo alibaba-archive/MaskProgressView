@@ -48,11 +48,7 @@ public class MaskProgressView: UIView {
             }
         }
     }
-    public var progress: CGFloat = 0 {
-        didSet {
-            setProgress(progress, animated: false)
-        }
-    }
+    public private(set) var progress: CGFloat = 0
     public var animationDuration: NSTimeInterval = 0.5
     public var colors: [UIColor]? {
         set {
@@ -145,9 +141,9 @@ public class MaskProgressView: UIView {
             animation.toValue = newLocations
             gradientLayer.addAnimation(animation, forKey: "animateLocations")
         } else {
-            gradientLayer.locations = newLocations
             gradientLayer.setNeedsDisplay()
         }
+        gradientLayer.locations = newLocations
         self.progress = progress
     }
 }

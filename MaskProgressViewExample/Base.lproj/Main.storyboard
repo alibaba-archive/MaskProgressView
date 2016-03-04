@@ -16,8 +16,57 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrc-6e-Hnc">
+                                <rect key="frame" x="200" y="151.5" width="200" height="298"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aly-ya-BA0">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="0.43485991379310346" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GM8-Aw-Xt0" customClass="MaskProgressView" customModule="MaskProgressView">
+                                        <rect key="frame" x="20" y="38" width="160" height="200"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="Mpe-Ls-B2N"/>
+                                            <constraint firstAttribute="height" constant="200" id="pGm-xV-34k"/>
+                                        </constraints>
+                                    </view>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="zq9-Mj-jI7">
+                                        <rect key="frame" x="-2" y="268" width="204" height="31"/>
+                                        <connections>
+                                            <action selector="sliderDidSlide:" destination="BYZ-38-t0r" eventType="valueChanged" id="ic9-F4-pyY"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Aly-ya-BA0" firstAttribute="top" secondItem="vrc-6e-Hnc" secondAttribute="top" id="1K3-5d-zs7"/>
+                                    <constraint firstItem="zq9-Mj-jI7" firstAttribute="top" secondItem="GM8-Aw-Xt0" secondAttribute="bottom" constant="30" id="1Kp-yd-UJP"/>
+                                    <constraint firstAttribute="width" constant="200" id="926-uj-j9T"/>
+                                    <constraint firstItem="zq9-Mj-jI7" firstAttribute="leading" secondItem="vrc-6e-Hnc" secondAttribute="leading" id="AgG-MD-AIa"/>
+                                    <constraint firstItem="Aly-ya-BA0" firstAttribute="leading" secondItem="vrc-6e-Hnc" secondAttribute="leading" id="Jhv-br-WNB"/>
+                                    <constraint firstAttribute="trailing" secondItem="Aly-ya-BA0" secondAttribute="trailing" id="Pt0-tR-82z"/>
+                                    <constraint firstAttribute="bottom" secondItem="zq9-Mj-jI7" secondAttribute="bottom" id="lov-6X-K7W"/>
+                                    <constraint firstItem="GM8-Aw-Xt0" firstAttribute="top" secondItem="Aly-ya-BA0" secondAttribute="bottom" constant="20" id="mxO-YA-K4v"/>
+                                    <constraint firstAttribute="trailing" secondItem="zq9-Mj-jI7" secondAttribute="trailing" id="p75-pa-10U"/>
+                                    <constraint firstItem="GM8-Aw-Xt0" firstAttribute="centerX" secondItem="vrc-6e-Hnc" secondAttribute="centerX" id="qSa-21-mKS"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vrc-6e-Hnc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FCa-m9-Gp4"/>
+                            <constraint firstItem="vrc-6e-Hnc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="V4j-E6-0Tn"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="micphoneView" destination="GM8-Aw-Xt0" id="VtM-V8-s52"/>
+                        <outlet property="progressLabel" destination="Aly-ya-BA0" id="5Sd-EQ-G07"/>
+                        <outlet property="slider" destination="zq9-Mj-jI7" id="ERM-qa-pcZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
