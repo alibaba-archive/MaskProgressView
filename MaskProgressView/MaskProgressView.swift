@@ -48,6 +48,11 @@ public class MaskProgressView: UIView {
             }
         }
     }
+    /// The current progress value of MaskProgressView.
+    ///
+    /// Private setting this property causes the progress view to redraw itself using the new value. To render an animated transition from the current value to the new value, you should use the "setProgress:animated:" method.
+    ///
+    /// If you try to set a value that is below the minimum or above the maximum value, the minimum or maximum value is set instead. The default value of this property is 0.0.
     public private(set) var progress: CGFloat = 0
     public var animationDuration: NSTimeInterval = 0.5
     public var colors: [UIColor]? {
@@ -77,8 +82,8 @@ public class MaskProgressView: UIView {
             if let backColor = newValue, var colors = colors where colors.count > 0 {
                 colors[0] = backColor
                 self.colors = colors
-                setNeedsDisplay()
             }
+            setNeedsDisplay()
         }
         get {
             if let colors = colors where colors.count > 0 {
@@ -89,11 +94,11 @@ public class MaskProgressView: UIView {
     }
     public var frontColor: UIColor? {
         set {
-            if let frontColor = newValue, var colors = colors where colors.count > 0 {
+            if let frontColor = newValue, var colors = colors where colors.count > 1 {
                 colors[1] = frontColor
                 self.colors = colors
-                setNeedsDisplay()
             }
+            setNeedsDisplay()
         }
         get {
             if let colors = colors where colors.count > 1 {
@@ -112,7 +117,7 @@ public class MaskProgressView: UIView {
         commonInit()
     }
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -153,7 +158,7 @@ extension MaskProgressView {
     private func commonInit() {
         setProgress(0, animated: false)
         backgroundColor = UIColor.clearColor()
-        colors = [UIColor.whiteColor(), UIColor.whiteColor()]
+        colors = [UIColor.clearColor(), UIColor.clearColor()]
     }
 
     private func maskView(view: UIView, withImage image: UIImage) {

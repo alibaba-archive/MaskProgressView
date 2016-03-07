@@ -35,6 +35,7 @@ class ExampleViewController: UIViewController {
         micphoneView.backColor = UIColor(white: 235 / 255, alpha: 1)
         micphoneView.setProgress(0.35, animated: false)
         slider.value = 0.35
+        updateProgressLabel()
     }
 
     private func updateProgressLabel() {
