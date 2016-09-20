@@ -5,14 +5,14 @@ MaskProgressView is a custom progress view which can be masked with an image con
 
 ##How To Get Started
 ###Carthage
-Specify "MaskProgressView" in your Cartfile:
+Specify "MaskProgressView" in your ```Cartfile```:
 ```ogdl 
 github "teambition/MaskProgressView"
 ```
 
 ###Usage
 ```swift
-progressView.direction = .Vertical
+progressView.direction = .vertical
 progressView.maskImage = UIImage(named: "exampleIcon")
 progressView.frontColor = UIColor(white: 195 / 255, alpha: 1)
 progressView.backColor = UIColor(white: 235 / 255, alpha: 1)

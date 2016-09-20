@@ -9,39 +9,39 @@
 import UIKit
 
 public enum MaskProgressViewDirection {
-    case Vertical
-    case Horizontal
+    case vertical
+    case horizontal
 }
 
-public class MaskProgressView: UIView {
-    private struct GradientLayerPoints {
+open class MaskProgressView: UIView {
+    fileprivate struct GradientLayerPoints {
         static let horizontalStartPoint = CGPoint(x: 1, y: 0.5)
         static let horizontalEndPoint = CGPoint(x: 0, y: 0.5)
         static let verticalStartPoint = CGPoint(x: 0.5, y: 0)
         static let verticalEndPoint = CGPoint(x: 0.5, y: 1)
     }
 
-    public var direction: MaskProgressViewDirection {
+    open var direction: MaskProgressViewDirection {
         set {
             switch newValue {
-            case .Vertical:
+            case .vertical:
                 gradientLayer.startPoint = GradientLayerPoints.verticalStartPoint
                 gradientLayer.endPoint = GradientLayerPoints.verticalEndPoint
-            case .Horizontal:
+            case .horizontal:
                 gradientLayer.startPoint = GradientLayerPoints.horizontalStartPoint
                 gradientLayer.endPoint = GradientLayerPoints.horizontalEndPoint
             }
         }
         get {
-            if CGPointEqualToPoint(gradientLayer.startPoint, GradientLayerPoints.horizontalStartPoint) &&
-               CGPointEqualToPoint(gradientLayer.endPoint, GradientLayerPoints.horizontalEndPoint) {
-                return MaskProgressViewDirection.Horizontal
+            if gradientLayer.startPoint.equalTo(GradientLayerPoints.horizontalStartPoint) &&
+               gradientLayer.endPoint.equalTo(GradientLayerPoints.horizontalEndPoint) {
+                return MaskProgressViewDirection.horizontal
             } else {
-                return MaskProgressViewDirection.Vertical
+                return MaskProgressViewDirection.vertical
             }
         }
     }
-    public var maskImage: UIImage? {
+    open var maskImage: UIImage? {
         didSet {
             if let maskImage = maskImage {
                 maskView(self, withImage: maskImage)
@@ -53,14 +53,12 @@ public class MaskProgressView: UIView {
     /// Private setting this property causes the progress view to redraw itself using the new value. To render an animated transition from the current value to the new value, you should use the "setProgress:animated:" method.
     ///
     /// If you try to set a value that is below the minimum or above the maximum value, the minimum or maximum value is set instead. The default value of this property is 0.0.
-    public private(set) var progress: CGFloat = 0
-    public var animationDuration: NSTimeInterval = 0.5
-    public var colors: [UIColor]? {
+    open fileprivate(set) var progress: Float = 0
+    open var animationDuration: TimeInterval = 0.5
+    open var colors: [UIColor]? {
         set {
             if let colors = newValue {
-                let cgColors = colors.map({ (color) -> CGColorRef in
-                    return color.CGColor
-                })
+                let cgColors = colors.map { $0.cgColor }
                 gradientLayer.colors = cgColors
             }
         }
@@ -68,51 +66,48 @@ public class MaskProgressView: UIView {
             guard let colors = gradientLayer.colors else {
                 return nil
             }
-            let uiColors = colors.flatMap { (color) -> UIColor? in
-                if color is CGColorRef {
-                    return UIColor(CGColor: color as! CGColorRef)
-                }
-                return nil
-            }
+            let uiColors = colors.map { UIColor(cgColor: $0 as! CGColor) }
             return uiColors
         }
     }
-    public var backColor: UIColor? {
+    open var backColor: UIColor? {
         set {
-            if let backColor = newValue, var colors = colors where colors.count > 0 {
+            if let backColor = newValue, let colors = colors, colors.count > 0 {
+                var colors = colors
                 colors[0] = backColor
                 self.colors = colors
             }
             setNeedsDisplay()
         }
         get {
-            if let colors = colors where colors.count > 0 {
+            if let colors = colors, colors.count > 0 {
                 return colors[0]
             }
             return nil
         }
     }
-    public var frontColor: UIColor? {
+    open var frontColor: UIColor? {
         set {
-            if let frontColor = newValue, var colors = colors where colors.count > 1 {
+            if let frontColor = newValue, let colors = colors, colors.count > 1 {
+                var colors = colors
                 colors[1] = frontColor
                 self.colors = colors
             }
             setNeedsDisplay()
         }
         get {
-            if let colors = colors where colors.count > 1 {
+            if let colors = colors, colors.count > 1 {
                 return colors[1]
             }
             return nil
         }
     }
-    public var gradientLayer: CAGradientLayer {
+    open var gradientLayer: CAGradientLayer {
         return layer as! CAGradientLayer
     }
 
     // MARK: - Life cycle
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         commonInit()
     }
@@ -128,12 +123,12 @@ public class MaskProgressView: UIView {
     }
 
     // MARK: - Overriding
-    override public class func layerClass() -> AnyClass {
+    override open class var layerClass: AnyClass {
         return CAGradientLayer.self
     }
 
     // MARK: - Public
-    public func setProgress(progress: CGFloat, animated: Bool) {
+    open func setProgress(_ progress: Float, animated: Bool) {
         let progress = 1 - min(max(progress, 0), 1)
         let newLocations = [progress, progress]
 
@@ -141,30 +136,29 @@ public class MaskProgressView: UIView {
             let animation = CABasicAnimation(keyPath: "locations")
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
             animation.duration = animationDuration
-            animation.delegate = self
             animation.fromValue = gradientLayer.locations
             animation.toValue = newLocations
-            gradientLayer.addAnimation(animation, forKey: "animateLocations")
+            gradientLayer.add(animation, forKey: "animateLocations")
         } else {
             gradientLayer.setNeedsDisplay()
         }
-        gradientLayer.locations = newLocations
+        gradientLayer.locations = newLocations.map { NSNumber(value: $0) }
         self.progress = progress
     }
 }
 
 extension MaskProgressView {
     // MARK: - Helper
-    private func commonInit() {
+    fileprivate func commonInit() {
         setProgress(0, animated: false)
-        backgroundColor = UIColor.clearColor()
-        colors = [UIColor.clearColor(), UIColor.clearColor()]
+        backgroundColor = UIColor.clear
+        colors = [UIColor.clear, UIColor.clear]
     }
 
-    private func maskView(view: UIView, withImage image: UIImage) {
+    fileprivate func maskView(_ view: UIView, withImage image: UIImage) {
         let maskLayer = CALayer()
         maskLayer.frame = view.bounds
-        maskLayer.contents = image.CGImage
+        maskLayer.contents = image.cgImage
         view.layer.mask = maskLayer
     }
 }

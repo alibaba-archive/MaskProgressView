@@ -19,17 +19,17 @@ class ExampleViewController: UIViewController {
         setupUI()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) { () -> Void in
+        let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) { () -> Void in
             self.micphoneView.setProgress(0.75, animated: true)
             self.slider.setValue(0.75, animated: true)
             self.updateProgressLabel()
         }
     }
 
-    private func setupUI() {
+    fileprivate func setupUI() {
         micphoneView.maskImage = UIImage(named: "micIcon")
         micphoneView.frontColor = UIColor(white: 195 / 255, alpha: 1)
         micphoneView.backColor = UIColor(white: 235 / 255, alpha: 1)
@@ -38,13 +38,13 @@ class ExampleViewController: UIViewController {
         updateProgressLabel()
     }
 
-    private func updateProgressLabel() {
+    fileprivate func updateProgressLabel() {
         progressLabel.text = "\(slider.value)"
     }
     
-    @IBAction func sliderDidSlide(sender: UISlider) {
+    @IBAction func sliderDidSlide(_ sender: UISlider) {
         updateProgressLabel()
-        micphoneView.setProgress(CGFloat(sender.value), animated: false)
+        micphoneView.setProgress(sender.value, animated: false)
     }
 }
 
