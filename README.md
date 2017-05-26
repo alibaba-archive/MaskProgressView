@@ -1,16 +1,16 @@
-#MaskProgressView
+# MaskProgressView
 MaskProgressView is a custom progress view which can be masked with an image containing an alpha channel.
 
 ![Example](Gif/MaskProgressViewExample.gif "MaskProgressViewExample")
 
-##How To Get Started
-###Carthage
+## How To Get Started
+### Carthage
 Specify "MaskProgressView" in your ```Cartfile```:
 ```ogdl 
 github "teambition/MaskProgressView"
 ```
 
-###Usage
+### Usage
 ```swift
 progressView.direction = .vertical
 progressView.maskImage = UIImage(named: "exampleIcon")
