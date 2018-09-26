@@ -134,7 +134,7 @@ open class MaskProgressView: UIView {
 
         if animated {
             let animation = CABasicAnimation(keyPath: "locations")
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             animation.duration = animationDuration
             animation.fromValue = gradientLayer.locations
             animation.toValue = newLocations
@@ -151,8 +151,8 @@ extension MaskProgressView {
     // MARK: - Helper
     fileprivate func commonInit() {
         setProgress(0, animated: false)
-        backgroundColor = UIColor.clear
-        colors = [UIColor.clear, UIColor.clear]
+        backgroundColor = .clear
+        colors = [.clear, .clear]
     }
 
     fileprivate func maskView(_ view: UIView, withImage image: UIImage) {
