@@ -21,7 +21,7 @@ class ExampleViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        let delayTime = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: delayTime) { () -> Void in
             self.micphoneView.setProgress(0.75, animated: true)
             self.slider.setValue(0.75, animated: true)
