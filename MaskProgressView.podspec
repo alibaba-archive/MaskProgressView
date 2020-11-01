@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MaskProgressView'
-  s.version          = '0.0.6'
+  s.version          = '0.0.7'
   s.summary          = 'MaskProgressView is a custom progress view which can be masked with an image containing an alpha channel.'
   s.description      = <<-DESC
   MaskProgressView is a custom progress view which can be masked with an image containing an alpha channel.
